@@ -118,6 +118,9 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Down half page and recentre cursor' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Down half page and recentre cursor' })
 
+vim.keymap.set('v', '<', '<gv', { desc = 'Dedent without losing selection' })
+vim.keymap.set('v', '>', '>gv', { desc = 'Indent without losing selection' })
+
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
