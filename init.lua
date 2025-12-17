@@ -24,7 +24,7 @@ vim.o.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.o.showmode = false
 
-vim.diagnostic.config { virtual_text = true }
+vim.diagnostic.config { severity_sort = true, virtual_text = true }
 
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
@@ -117,6 +117,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Down half page and recentre cursor' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Down half page and recentre cursor' })
+vim.keymap.set('n', '<leader>ge', vim.diagnostic.goto_next, { desc = 'Go to next lsp error' })
 
 vim.keymap.set('v', '<', '<gv', { desc = 'Dedent without losing selection' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent without losing selection' })
@@ -606,17 +607,20 @@ require('lazy').setup({
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        pyright = {},
+        zuban = {},
         flake8 = {},
         zls = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
+        svelte = {},
+        gopls = {},
+
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`ts_ls`) will work just fine
-        -- ts_ls = {},
+        ts_ls = {},
         --
 
         lua_ls = {
@@ -708,7 +712,8 @@ require('lazy').setup({
         -- yaml = { 'prettierd' },
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
+        typescript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
   },
@@ -907,7 +912,7 @@ require('lazy').setup({
   --
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
-  require 'kickstart.plugins.lint',
+  -- require 'kickstart.plugins.lint',
   -- require 'kickstart.plugins.autopairs',
   -- require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
