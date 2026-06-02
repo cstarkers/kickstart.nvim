@@ -32,7 +32,7 @@ vim.diagnostic.config { severity_sort = true, virtual_text = true }
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+  vim.o.clipboard = 'unnamed,unnamedplus'
 end)
 
 -- Enable break indent
