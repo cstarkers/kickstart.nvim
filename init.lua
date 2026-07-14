@@ -15,7 +15,7 @@ vim.g.have_nerd_font = true
 -- Make line numbers default
 vim.o.number = true
 vim.o.relativenumber = true
--- You can also add relative line numbers, to help with jumping.
+-- You can also add relative line numbers, to help with jumping.ini
 --  Experiment for yourself to see if you like it!
 -- vim.o.relativenumber = true
 
@@ -112,9 +112,9 @@ vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' }
 --
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('n', '<C-d>', '<C-d>zz', { desc = 'Down half page and recentre cursor' })
 vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Down half page and recentre cursor' })
@@ -122,6 +122,15 @@ vim.keymap.set('n', '<leader>ge', vim.diagnostic.goto_next, { desc = 'Go to next
 
 vim.keymap.set('v', '<', '<gv', { desc = 'Dedent without losing selection' })
 vim.keymap.set('v', '>', '>gv', { desc = 'Indent without losing selection' })
+
+-- some Copilot keymaps
+vim.keymap.set('n', '<leader>cp', function()
+  require('copilot.suggestion').toggle_auto_trigger()
+end, { desc = 'Toggle copilot suggestions on and off' })
+
+vim.keymap.set('n', '<leader>cf', function()
+  vim.fn.setreg('+', '@' .. vim.fn.expand '%:.')
+end, { desc = 'Copy a copilot-friendly reference to the current position in the current file' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -202,10 +211,6 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
     },
-  },
-
-  {
-    'ThePrimeagen/vim-be-good',
   },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
@@ -472,7 +477,7 @@ require('lazy').setup({
 
           -- Rename the variable under your cursor.
           --  Most Language Servers support renaming across files, etc.
-          map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
+          -- map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
           -- Execute a code action, usually your cursor needs to be on top of an error
           -- or a suggestion from your LSP for this to activate.
@@ -717,6 +722,33 @@ require('lazy').setup({
         typescript = { 'prettierd', 'prettier', stop_after_first = true },
       },
     },
+  },
+
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    opts = {
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = '<C-l>',
+          accept_word = false,
+          accept_line = false,
+          next = '<C-j>',
+          prev = '<C-k>',
+          dismiss = '<C-e>',
+        },
+      },
+      auth_provider_url = 'https://cybercx.ghe.com/',
+    },
+  },
+
+  -- provides a better merge experience for working on files in one terminal and copilot in another
+  {
+    'flamingoosesoftwareinc/swap-merge.nvim',
+    opts = {},
   },
 
   { -- Autocompletion
